@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
@@ -16,17 +16,21 @@ export class TodolistsComponent {
   private router = inject(Router);
   private todolistsService = inject(TodolistsService);
   todolist = signal<string>('');
-  todolists: todolist[] = [];
-  search = signal<string>('');
+  todolists = signal<todolist[]>([]);
+  search = model<string>('');
   constructor() {
-    this.todolists = this.todolistsService.getTodolists();
+    this.todolists.set(this.todolistsService.getTodolists());
   }
-  searchTodolist() {}
+  filterTodolist = computed(() => {
+    return this.todolists().filter((todolist) =>
+      todolist.name.includes(this.search())
+    );
+  });
   addTodolist() {
     if (this.todolist()) {
       const newTodolist = new todolist();
       newTodolist.name = this.todolist();
-      this.todolists = this.todolistsService.add(newTodolist);
+      this.todolists.set(this.todolistsService.add(newTodolist));
     }
   }
   navigate(id: number) {
@@ -34,6 +38,6 @@ export class TodolistsComponent {
     this.router.navigate([`todolist/${id}`]);
   }
   delete(id: number) {
-    this.todolists = this.todolistsService.remove(id);
+    this.todolists.set(this.todolistsService.remove(id));
   }
 }
