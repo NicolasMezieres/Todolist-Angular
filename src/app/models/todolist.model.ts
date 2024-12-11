@@ -1,7 +1,9 @@
+import { todo } from './todo.model';
+
 export class todolist {
   id: number = 1;
-  isChecked: boolean = false;
-  todo: string = '';
+  name: string = '';
+  todolist: todo[] = [];
   copy(): todolist {
     return Object.assign(new todolist(), this);
   }

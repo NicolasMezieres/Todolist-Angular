@@ -1,0 +1,51 @@
+<main class="flex flex-col items-center gap-4">
+  <div class="flex justify-center items-center mt-4">
+    <input
+      type="text"
+      class="text-center w-80 h-8 border-r-0 border-2 rounded-l border-blue-500 focus-visible:outline-none cursor-pointer"
+      placeholder="Search a todolist"
+      [(ngModel)]="search"
+    />
+    <button
+      (click)="searchTodolist()"
+      [disabled]="search() === ''"
+      class="border-l-0 border-2 h-8 border-blue-500 rounded-r cursor-pointer duration-300"
+    >
+      <mat-icon class="text-2xl cursor-pointer mr-2">search</mat-icon>
+    </button>
+  </div>
+  <div class="flex">
+    <input
+      type="text"
+      class="text-center border-2 rounded-l border-blue-500 focus-visible:outline-none cursor-pointer"
+      placeholder="Create a todolist"
+      [(ngModel)]="todolist"
+    />
+    <button
+      (click)="addTodolist()"
+      [disabled]="todolist() === ''"
+      class="bg-blue-500 text-white px-2 rounded-r text-center cursor-pointer hover:bg-blue-300 hover:text-[#212121] duration-300 select-none"
+    >
+      +
+    </button>
+  </div>
+  <div class="flex flex-wrap gap-x-10 gap-y-4">
+    @if(todolists.length === 0){
+
+    <h2>Not todolist found</h2>
+    } @for(todolist of todolists; track $index){
+    <div
+      class="flex flex-col items-center border-2 border-[#212121] p-1 rounded-lg"
+    >
+      <button (click)="navigate(todolists[$index].id)">
+        {{ todolist.name }}
+      </button>
+      <mat-icon
+        (click)="delete(todolist.id)"
+        class="text-[#A52A2A] text-2xl cursor-pointer"
+        >delete</mat-icon
+      >
+    </div>
+    }
+  </div>
+</main>

@@ -1,8 +1,19 @@
-<main class="flex flex-col items-center gap-4 h-screen py-16">
+<main class="relative flex flex-col items-center gap-4 h-screen py-4">
+  <button
+    (click)="backHome()"
+    class="absolute top-4 left-4 bg-blue-500 text-[#f2f2f2] px-2 rounded-md hover:text-[#212121] hover:bg-blue-300 duration-300"
+  >
+    Home
+  </button>
+  <input
+    class="text-xl text-center border-2 border-blue-500 rounded outline-none"
+    type="text"
+    [(ngModel)]="todolistName"
+  />
   <div class="flex">
     <input
       type="text"
-      class="text-center w-80 border-2 rounded-l border-blue-500 focus-visible:outline-none cursor-pointer"
+      class="text-center w-80 border-2 rounded-l border-blue-500 outline-none cursor-pointer"
       placeholder="Create a todo"
       [(ngModel)]="todo"
     />
@@ -33,9 +44,6 @@
         {{ todo.todo }}
       </label>
       <div>
-        <!-- <mat-icon class="text-[#A52A2A] text-xl cursor-pointer">
-          border_color</mat-icon
-        > -->
         <mat-icon
           (click)="delete(todo.id)"
           class="text-[#A52A2A] text-2xl cursor-pointer"
